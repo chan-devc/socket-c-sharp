@@ -1,0 +1,17 @@
+/home/chan/Engine-network/bin/Debug/net7.0/Engine-network
+/home/chan/Engine-network/bin/Debug/net7.0/Engine-network.deps.json
+/home/chan/Engine-network/bin/Debug/net7.0/Engine-network.runtimeconfig.json
+/home/chan/Engine-network/bin/Debug/net7.0/Engine-network.dll
+/home/chan/Engine-network/bin/Debug/net7.0/Engine-network.pdb
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.csproj.AssemblyReference.cache
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.GeneratedMSBuildEditorConfig.editorconfig
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.AssemblyInfoInputs.cache
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.AssemblyInfo.cs
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.csproj.CoreCompileInputs.cache
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.dll
+/home/chan/Engine-network/obj/Debug/net7.0/refint/Engine-network.dll
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.pdb
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.genruntimeconfig.cache
+/home/chan/Engine-network/obj/Debug/net7.0/ref/Engine-network.dll
+/home/chan/Engine-network/bin/Debug/net7.0/Newtonsoft.Json.dll
+/home/chan/Engine-network/obj/Debug/net7.0/Engine-network.csproj.CopyComplete

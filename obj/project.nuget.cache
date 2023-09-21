@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wAR7m+64ljBE+XUwabIzDP76oSWi3mOrcsZSBpHbjD/MMRnDR07fvFs8GcV9F1zZ8oNuqdEnYo/YnClqc1Sovw==",
+  "success": true,
+  "projectFilePath": "/home/chan/Engine-network/Engine-network.csproj",
+  "expectedPackageFiles": [
+    "/home/chan/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
