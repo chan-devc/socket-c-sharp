@@ -42,10 +42,16 @@ class Program
             if (result.MessageType == WebSocketMessageType.Text)
             {
                 string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                Console.WriteLine($"Received: {message}");
+                // Console.WriteLine($"Received: {message}");
+                string modifiedMessage = $"Modified: {message}";
+
+                // Convert the modified message to bytes
+                byte[] modifiedMessageBytes = Encoding.UTF8.GetBytes(modifiedMessage);
+
 
                 // Echo the received message back to the client
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), WebSocketMessageType.Text, true, CancellationToken.None);
+                // await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), WebSocketMessageType.Text, true, CancellationToken.None);
+                await webSocket.SendAsync(new ArraySegment<byte>(modifiedMessageBytes, 0, modifiedMessageBytes.Length), WebSocketMessageType.Text, true, CancellationToken.None);
             }
             else if (result.MessageType == WebSocketMessageType.Close)
             {
