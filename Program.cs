@@ -2,17 +2,19 @@
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using socket_c_sharp;
+using System.Data;
+using System.Text.Json;
 
 class Program
 {
     static async Task Main(string[] args)
     {
         HttpListener listener = new HttpListener();
-        listener.Prefixes.Add("http://192.168.1.123:8080/");
+        listener.Prefixes.Add("http://*:90/");
         listener.Start();
-        Console.WriteLine("WebSocket server listening on http://localhost:8080/");
+        Console.WriteLine("WebSocket server listening");
 
         while (true)
         {
@@ -42,11 +44,10 @@ class Program
             if (result.MessageType == WebSocketMessageType.Text)
             {
                 string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                // Console.WriteLine($"Received: {message}");
-                string modifiedMessage = $"Modified: {message}";
+                var nData = getLicenseNo(message);
 
                 // Convert the modified message to bytes
-                byte[] modifiedMessageBytes = Encoding.UTF8.GetBytes(modifiedMessage);
+                byte[] modifiedMessageBytes = Encoding.UTF8.GetBytes(nData);
 
 
                 // Echo the received message back to the client
@@ -58,5 +59,260 @@ class Program
                 await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             }
         }
+    }
+
+    // get Vehicles
+    static string getLicenseNo(string value)
+    {
+        string jsonData = "";
+        using (var dbConnecttion = new DataBaseConnection())
+        {
+            JsonDocument jsonDoc = JsonDocument.Parse(value);
+            string LicenseNo = "";
+            string nDate = "";
+
+            // access properties
+            JsonElement root = jsonDoc.RootElement;
+
+            if (root.TryGetProperty("licenseNo", out JsonElement licens))
+            {
+                LicenseNo = licens.GetString();
+            }
+
+            if (root.TryGetProperty("DateTime", out JsonElement dateTime))
+            {
+                nDate = dateTime.GetString();
+            }
+
+            try
+            {
+                string query = $"select TOP 1 * from TableCarInfo where Car___No like '{LicenseNo}%' and AcceptNo like '%{nDate}%' Order by AcceptNo DESC";
+                DataTable result = dbConnecttion.ExecuteQuery(query);
+
+                var dataList = new List<Dictionary<string, object>>();
+                foreach (DataRow item in result.Rows)
+                {
+                    var Inspection = getInspection($"{item["AcceptNo"]}");
+                    var Lamp = getLamp($"{item["AcceptNo"]}");
+                    var Smoke = getSmoke($"{item["AcceptNo"]}");
+                    var COHC = getCOHC($"{item["AcceptNo"]}");
+
+                    var data = new Dictionary<string, object>
+                            {
+                              {"AcceptNo", item["AcceptNo"]},
+                              {"LicenseNo", item["Car___No"]},
+                              {"Axle", item["Tst_Axle"]},
+                              {"Inspection", Inspection },
+                              {"Lamp", Lamp },
+                              {"Smoke", Smoke },
+                              {"COHC", COHC },
+
+                            };
+                    dataList.Add(data);
+                }
+
+                dbConnecttion.Close();
+
+                jsonData = JsonConvert.SerializeObject(dataList);
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+        }
+        return jsonData;
+    }
+
+    //  get inspection
+    static string getInspection(string acceptNo)
+    {
+        string jsonData = "";
+        using (var dbConnecttion = new DataBaseConnection())
+        {
+            try
+            {
+                string query = $"select * from TableCarData where AcceptNo = '{acceptNo}'";
+                DataTable result = dbConnecttion.ExecuteQuery(query);
+
+                var dataList = new List<Dictionary<string, object>>();
+                foreach (DataRow item in result.Rows)
+                {
+                    var data = new Dictionary<string, object>
+                            {
+                            {"AcceptNo", item["AcceptNo"]},
+                            {"Start_Date", item["ABS__Stt"]},
+                            {"End_Date", item["ABS__End"]},
+                            {"Side_slip_F", item["SlipV_FF"]},
+                            {"Side_slip_FS", item["SlipFFPK"]},
+                            {"Side_slip_R", item["SlipV_RR"]},
+                            {"Side_slip_RS", item["SlipRRPK"]},
+                            {"Side_slip_Sum", item["Slip__PK"]},
+
+                            //   axle one
+                            {"Brake_weight_one", item["Axis__FF"]},
+                            {"Brake_force_left_axle_one", item["Brk_L_FF"]},
+                            {"Brake_force_right_axle_one", item["Brk_R_FF"]},
+                            {"Brake_force_sum_axle_one", item["BSum__FF"]},
+                            {"Brake_force_diff_axle_one", item["BDiff_FF"]},
+                            {"Brake_force_result_axle_one", item["BSumFFPK"]},
+
+                            //   axle two
+                            {"Brake_weight_two", item["Axis__RR"]},
+                            {"Brake_force_left_axle_two", item["Brk_L_RR"]},
+                            {"Brake_force_right_axle_two", item["Brk_R_RR"]},
+                            {"Brake_force_sum_axle_two", item["BSum__RR"]},
+                            {"Brake_force_diff_axle_two", item["BDiff_RR"]},
+                            {"Brake_force_result_axle_two", item["BSumRRPK"]},
+
+                            // hand brake
+                            {"Brake_force_left_hand", item["Brk_L_PB"]},
+                            {"Brake_force_right_hand", item["Brk_R_PB"]},
+                            {"Brake_force_sum_hand", item["BSum__PB"]},
+                            {"Brake_force_diff_hand", item["BDiff_PB"]},
+                            {"Brake_force_result_hand", item["BSumPBPK"]},
+
+                            //   diff of brake left and right
+                            {"Brake_total_left", item["Brk_TotL"]},
+                            {"Brake_total_right", item["Brk_TotR"]},
+                            {"Brake_total", item["BSumP_PK"]},
+                            {"Brake_result", item["Brake_PK"]},
+
+                            
+                            // speedemoter
+                            {"speedemotor40", item["Speed_40"]},
+                            {"speedemotor40_resutl", item["Speed_PK"]},
+
+                            // speedemoter
+                            {"weight", item["Axis_SUM"]},
+
+
+                            };
+                    dataList.Add(data);
+                }
+                jsonData = JsonConvert.SerializeObject(dataList);
+                dbConnecttion.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+        return jsonData;
+    }
+
+    //  get lamp
+    static string getLamp(string acceptNo)
+    {
+        string jsonData = "";
+        using (var dbConnecttion = new DataBaseConnection())
+        {
+            try
+            {
+                string query = $"select AcceptNo,HTstTime,LLuc0_UD,LLuc0_LR,RLuc0Val,RLuc0_PK from TableCar_HLT where AcceptNo = '{acceptNo}'";
+                DataTable result = dbConnecttion.ExecuteQuery(query);
+
+                var dataList = new List<Dictionary<string, object>>();
+                foreach (DataRow item in result.Rows)
+                {
+                    var data = new Dictionary<string, object>
+                            {
+                            {"AcceptNo", item["AcceptNo"]},
+                            {"DateIn", item["HTstTime"]},
+                            {"light_light", item["LLuc0_UD"]},
+                            {"light_low", item["LLuc0_LR"]},
+                            {"lamp_opactity", item["RLuc0Val"]},
+                            {"lamp_result", item["RLuc0_PK"]},
+                            };
+                    dataList.Add(data);
+                }
+                jsonData = JsonConvert.SerializeObject(dataList);
+                dbConnecttion.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+        return jsonData;
+    }
+
+    //  get smoke
+    static string getSmoke(string acceptNo)
+    {
+        string jsonData = "";
+        using (var dbConnecttion = new DataBaseConnection())
+        {
+            try
+            {
+                string query = $"select AcceptNo,Opa_Date,OpaAverage,Opacity_PK from TableCar_Opa where AcceptNo = '{acceptNo}'";
+                DataTable result = dbConnecttion.ExecuteQuery(query);
+
+                var dataList = new List<Dictionary<string, object>>();
+                foreach (DataRow item in result.Rows)
+                {
+                    var data = new Dictionary<string, object>
+                            {
+                            {"AcceptNo", item["AcceptNo"]},
+                            {"DateIn", item["Opa_Date"]},
+                            {"smoke_average", item["OpaAverage"]},
+                            {"smoke_result", item["Opacity_PK"]}
+                            };
+                    dataList.Add(data);
+                }
+                jsonData = JsonConvert.SerializeObject(dataList);
+                dbConnecttion.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+        return jsonData;
+    }
+
+    //  get COHC
+    static string getCOHC(string acceptNo)
+    {
+        string jsonData = "";
+        using (var dbConnecttion = new DataBaseConnection())
+        {
+            try
+            {
+                string query = $"select AcceptNo,CoHcDate,TstL__CO,TstL__HC,Smoke_PK from TableCarCOHC where AcceptNo = '{acceptNo}'";
+                DataTable result = dbConnecttion.ExecuteQuery(query);
+
+                var dataList = new List<Dictionary<string, object>>();
+                foreach (DataRow item in result.Rows)
+                {
+                    var data = new Dictionary<string, object>
+                            {
+                            {"AcceptNo", item["AcceptNo"]},
+                            {"DateIn", item["CoHcDate"]},
+                            {"CO", item["TstL__CO"]},
+                            {"HC", item["TstL__HC"]},
+                            {"HC", item["Smoke_PK"]},
+                            };
+                    dataList.Add(data);
+                }
+                jsonData = JsonConvert.SerializeObject(dataList);
+                dbConnecttion.Close();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+        return jsonData;
     }
 }

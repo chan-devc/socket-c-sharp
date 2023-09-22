@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/chan/Engine-network/Engine-network.csproj": {}
+    "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj": {}
   },
   "projects": {
-    "/home/chan/Engine-network/Engine-network.csproj": {
+    "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/chan/Engine-network/Engine-network.csproj",
+        "projectUniqueName": "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj",
         "projectName": "Engine-network",
-        "projectPath": "/home/chan/Engine-network/Engine-network.csproj",
-        "packagesPath": "/home/chan/.nuget/packages/",
-        "outputPath": "/home/chan/Engine-network/obj/",
+        "projectPath": "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj",
+        "packagesPath": "C:\\Users\\chan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\chan\\Documents\\socket-c-sharp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/chan/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\chan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -41,6 +41,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "System.Data.Common": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.Data.Odbc": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [
@@ -59,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
