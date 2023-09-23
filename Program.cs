@@ -6,13 +6,18 @@ using Newtonsoft.Json;
 using socket_c_sharp;
 using System.Data;
 using System.Text.Json;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 class Program
 {
     static async Task Main(string[] args)
     {
         HttpListener listener = new HttpListener();
-        listener.Prefixes.Add("http://*:90/");
+        // listener.Prefixes.Add("http://*:90/");
+        listener.Prefixes.Add("http://192.168.248.149:8080/");
         listener.Start();
         Console.WriteLine("WebSocket server listening");
 
@@ -44,10 +49,30 @@ class Program
             if (result.MessageType == WebSocketMessageType.Text)
             {
                 string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                var nData = getLicenseNo(message);
+
+                JsonDocument jsonDoc = JsonDocument.Parse(message);
+                string Name = "";
+                string Value = "";
+
+                // access properties
+                JsonElement root = jsonDoc.RootElement;
+
+                if (root.TryGetProperty("Name", out JsonElement name))
+                {
+                    Name = name.GetString();
+                }
+
+                if (Name == "Capture")
+                {
+                    Value = await getImage(message);
+                }
+                else
+                {
+                    Value = getLicenseNo(message);
+                }
 
                 // Convert the modified message to bytes
-                byte[] modifiedMessageBytes = Encoding.UTF8.GetBytes(nData);
+                byte[] modifiedMessageBytes = Encoding.UTF8.GetBytes(Value);
 
 
                 // Echo the received message back to the client
@@ -61,6 +86,75 @@ class Program
         }
     }
 
+    // capture the image
+    static async Task<string> getImage(string message)
+    {
+        string Image = "";
+        string cameraIp = "";
+        string username = ""; // Replace with your camera's username
+        string password = ""; // Replace with your camera's IP address or hostname
+
+        JsonDocument jsonDoc = JsonDocument.Parse(message);
+
+        // access properties
+        JsonElement root = jsonDoc.RootElement;
+
+        if (root.TryGetProperty("cameraIp", out JsonElement camera))
+        {
+            cameraIp = camera.GetString();
+        }
+        if (root.TryGetProperty("username", out JsonElement name))
+        {
+            username = name.GetString();
+        }
+        if (root.TryGetProperty("password", out JsonElement pwd))
+        {
+            password = pwd.GetString();
+        }
+
+
+        string captureImageUrl = $"http://{cameraIp}/ISAPI/Streaming/channels/1/picture"; // Adjust the URL as per your camera's documentation
+
+
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                // Set up basic authentication headers
+                string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+
+                // Send an HTTP GET request to capture the image
+                HttpResponseMessage response = await client.GetAsync(captureImageUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read and store the image data
+                    byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
+
+                    string base64Image = Convert.ToBase64String(imageBytes);
+
+                    // File.WriteAllBytes("captured_image.jpg", imageBytes);
+                    var dataList = new List<Dictionary<string, object>>();
+                    var data = new Dictionary<string, object>
+                     {
+                        {"base64", base64Image}
+                     };
+                    dataList.Add(data);
+                    Image = JsonConvert.SerializeObject(dataList);
+                }
+                else
+                {
+                    Console.WriteLine($"HTTP Error: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        return Image;
+    }
     // get Vehicles
     static string getLicenseNo(string value)
     {

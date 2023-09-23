@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj": {}
+    "/home/chan/Engine-network/Engine-network.csproj": {}
   },
   "projects": {
-    "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj": {
+    "/home/chan/Engine-network/Engine-network.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj",
+        "projectUniqueName": "/home/chan/Engine-network/Engine-network.csproj",
         "projectName": "Engine-network",
-        "projectPath": "C:\\Users\\chan\\Documents\\socket-c-sharp\\Engine-network.csproj",
-        "packagesPath": "C:\\Users\\chan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chan\\Documents\\socket-c-sharp\\obj\\",
+        "projectPath": "/home/chan/Engine-network/Engine-network.csproj",
+        "packagesPath": "/home/chan/.nuget/packages/",
+        "outputPath": "/home/chan/Engine-network/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\chan\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/chan/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -42,6 +42,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "ONVIF": {
+              "target": "Package",
+              "version": "[1.0.14, )"
+            },
             "System.Data.Common": {
               "target": "Package",
               "version": "[4.3.0, )"
@@ -49,6 +53,10 @@
             "System.Data.Odbc": {
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "TnscCore.Core.Cctv.HikVision": {
+              "target": "Package",
+              "version": "[1.6.3, )"
             }
           },
           "imports": [
@@ -67,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
         }
       }
     }

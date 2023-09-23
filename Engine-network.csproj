@@ -11,8 +11,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="ONVIF" Version="1.0.14" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Data.Odbc" Version="7.0.0" />
+    <PackageReference Include="TnscCore.Core.Cctv.HikVision" Version="1.6.3" />
   </ItemGroup>
 
 </Project>
