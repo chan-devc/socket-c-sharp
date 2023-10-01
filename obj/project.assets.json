@@ -730,23 +730,6 @@
             "rid": "win"
           }
         }
-      },
-      "TnscCore.Core.Cctv.HikVision/1.6.3": {
-        "type": "package",
-        "compile": {
-          "lib/net472/System.Drawing.dll": {},
-          "lib/net472/System.Windows.Forms.dll": {},
-          "lib/net472/TnscCore.Core.Cctv.HikVision.dll": {},
-          "lib/net472/TnscCore.Core.Cctv.Shared.dll": {},
-          "lib/net472/WindowsFormsIntegration.dll": {}
-        },
-        "runtime": {
-          "lib/net472/System.Drawing.dll": {},
-          "lib/net472/System.Windows.Forms.dll": {},
-          "lib/net472/TnscCore.Core.Cctv.HikVision.dll": {},
-          "lib/net472/TnscCore.Core.Cctv.Shared.dll": {},
-          "lib/net472/WindowsFormsIntegration.dll": {}
-        }
       }
     }
   },
@@ -2635,55 +2618,6 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "TnscCore.Core.Cctv.HikVision/1.6.3": {
-      "sha512": "bM7SNJbW96SaoGexI/GKd8STXZNnNmXCVzjv+WcqRXHydNzcWsNqKv3xTG3lQtYO4xddgtJ07sbWIjew6GB1/g==",
-      "type": "package",
-      "path": "tnsccore.core.cctv.hikvision/1.6.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "HikVision References/AudioRender.dll",
-        "HikVision References/EagleEyeRender.dll",
-        "HikVision References/HCCore.dll",
-        "HikVision References/HCNetSDK.dll",
-        "HikVision References/HCNetSDKCom/AnalyzeData.dll",
-        "HikVision References/HCNetSDKCom/AudioIntercom.dll",
-        "HikVision References/HCNetSDKCom/HCAlarm.dll",
-        "HikVision References/HCNetSDKCom/HCCoreDevCfg.dll",
-        "HikVision References/HCNetSDKCom/HCDisplay.dll",
-        "HikVision References/HCNetSDKCom/HCGeneralCfgMgr.dll",
-        "HikVision References/HCNetSDKCom/HCIndustry.dll",
-        "HikVision References/HCNetSDKCom/HCPlayBack.dll",
-        "HikVision References/HCNetSDKCom/HCPreview.dll",
-        "HikVision References/HCNetSDKCom/HCVoiceTalk.dll",
-        "HikVision References/HCNetSDKCom/OpenAL32.dll",
-        "HikVision References/HCNetSDKCom/StreamTransClient.dll",
-        "HikVision References/HCNetSDKCom/SystemTransform.dll",
-        "HikVision References/HCNetSDKCom/libiconv2.dll",
-        "HikVision References/HXVA.dll",
-        "HikVision References/MP_Render.dll",
-        "HikVision References/NPQos.dll",
-        "HikVision References/PlayCtrl.dll",
-        "HikVision References/SuperRender.dll",
-        "HikVision References/YUVProcess.dll",
-        "HikVision References/gdiplus.dll",
-        "HikVision References/hlog.dll",
-        "HikVision References/hpr.dll",
-        "HikVision References/libeay32.dll",
-        "HikVision References/libmmd.dll",
-        "HikVision References/ssleay32.dll",
-        "HikVision References/zlib1.dll",
-        "ReadMe.txt",
-        "content/zDocs/ReadMe.txt",
-        "lib/net472/System.Drawing.dll",
-        "lib/net472/System.Windows.Forms.dll",
-        "lib/net472/TnscCore.Core.Cctv.HikVision.dll",
-        "lib/net472/TnscCore.Core.Cctv.Shared.dll",
-        "lib/net472/WindowsFormsIntegration.dll",
-        "tnsccore.core.cctv.hikvision.1.6.3.nupkg.sha512",
-        "tnsccore.core.cctv.hikvision.nuspec"
-      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -2691,8 +2625,7 @@
       "Newtonsoft.Json >= 13.0.3",
       "ONVIF >= 1.0.14",
       "System.Data.Common >= 4.3.0",
-      "System.Data.Odbc >= 7.0.0",
-      "TnscCore.Core.Cctv.HikVision >= 1.6.3"
+      "System.Data.Odbc >= 7.0.0"
     ]
   },
   "packageFolders": {
@@ -2747,10 +2680,6 @@
           "System.Data.Odbc": {
             "target": "Package",
             "version": "[7.0.0, )"
-          },
-          "TnscCore.Core.Cctv.HikVision": {
-            "target": "Package",
-            "version": "[1.6.3, )"
           }
         },
         "imports": [
@@ -2772,17 +2701,5 @@
         "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'TnscCore.Core.Cctv.HikVision 1.6.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
-      "libraryId": "TnscCore.Core.Cctv.HikVision",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    }
-  ]
+  }
 }

@@ -112,7 +112,6 @@ class Program
             password = pwd.GetString();
         }
 
-
         string captureImageUrl = $"http://{cameraIp}/ISAPI/Streaming/channels/1/picture"; // Adjust the URL as per your camera's documentation
 
 
@@ -180,7 +179,7 @@ class Program
 
             try
             {
-                string query = $"select TOP 1 * from TableCarInfo where Car___No like '{LicenseNo}%' and AcceptNo like '%{nDate}%' Order by AcceptNo DESC";
+                string query = $"select TOP 1 * from TableCarInfo where Car___No like '%{LicenseNo}' and AcceptNo like '%{nDate}%' Order by AcceptNo DESC";
                 DataTable result = dbConnecttion.ExecuteQuery(query);
 
                 var dataList = new List<Dictionary<string, object>>();

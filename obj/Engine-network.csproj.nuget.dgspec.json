@@ -53,10 +53,6 @@
             "System.Data.Odbc": {
               "target": "Package",
               "version": "[7.0.0, )"
-            },
-            "TnscCore.Core.Cctv.HikVision": {
-              "target": "Package",
-              "version": "[1.6.3, )"
             }
           },
           "imports": [
