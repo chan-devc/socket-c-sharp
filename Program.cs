@@ -17,7 +17,7 @@ class Program
     {
         HttpListener listener = new HttpListener();
         // listener.Prefixes.Add("http://*:90/");
-        listener.Prefixes.Add("http://192.168.248.149:8080/");
+        listener.Prefixes.Add("http://*:8080/");
         listener.Start();
         Console.WriteLine("WebSocket server listening");
 
@@ -392,7 +392,7 @@ class Program
                             {"DateIn", item["CoHcDate"]},
                             {"CO", item["TstL__CO"]},
                             {"HC", item["TstL__HC"]},
-                            {"HC", item["Smoke_PK"]},
+                            {"result", item["Smoke_PK"]},
                             };
                     dataList.Add(data);
                 }
